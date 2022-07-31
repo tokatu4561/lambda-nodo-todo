@@ -11,20 +11,16 @@ module.exports.createTodo = (event, context, callback) =>  {
         }
     }
 
-    dynamoDb.scan(params, (error, data) => {
+    dynamoDb.delete(params, (error, data) => {
         if (error) {
             console.error(error);
             callback(new Error);
             return
         }
 
-        const response = data.Item ? 
-        {
+        const response = {
             statusCode: 200,
             body: JSON.stringify(data.Item)
-        } : {
-            statusCode: 404,
-            body: JSON.stringify("data not fond")
         }
 
         callback(null, response)
